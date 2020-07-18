@@ -3,6 +3,9 @@
 import fetchDynamoCredentials from './modules/credentials';
 import readProjectData from './modules/storage';
 
+import { DEFAULT_PROJECT_NAME } from './modules/constants';
+import ProjectData from './modules/types';
+
 const { argv } = require('yargs')
   .usage('Usage: $0 [options]')
   .example('$0 -s <decryption_secret> -p <project_name>')
@@ -16,12 +19,21 @@ const { argv } = require('yargs')
   .help('h')
   .alias('h', 'help');
 
-async function main() {
-  const { secret } = argv;
-  const { projectName } = argv;
-
+async function fetchProjectData(secret, projectName) {
   const dynamoCredentials = await fetchDynamoCredentials(secret);
-  const projectData = await readProjectData(dynamoCredentials, projectName);
+  let projectData = await readProjectData(dynamoCredentials, projectName);
+
+  if (projectData.Count !== 1) {
+    projectData = await readProjectData(dynamoCredentials, DEFAULT_PROJECT_NAME);
+  }
+
+  return new ProjectData(projectData);
+}
+
+async function main() {
+  const { secret, projectName } = argv;
+
+  const projectData = await fetchProjectData(secret, projectName);
 
   process.stdout.write(JSON.stringify(projectData));
 }
