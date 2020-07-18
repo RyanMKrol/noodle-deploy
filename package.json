@@ -1,0 +1,30 @@
+{
+  "name": "noodle-deploy",
+  "version": "1.0.0",
+  "license": "MIT",
+  "main": "build/index.js",
+  "keywords": [],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/RyanMKrol/noodle-deploy.git"
+  },
+  "files": [
+    "build"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm run lint && ./node_modules/.bin/babel src --out-dir build",
+    "lint": "eslint src/ --ext .js"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.10.4",
+    "@babel/core": "^7.10.4",
+    "@babel/preset-env": "^7.10.4",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.0",
+    "eslint-plugin-import": "^2.22.0"
+  },
+  "dependencies": {
+    "@babel/polyfill": "^7.10.4"
+  }
+}
