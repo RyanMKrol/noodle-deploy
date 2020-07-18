@@ -1,6 +1,10 @@
 #!/usr/bin/env node
 
-import fetchDynamoCredentials from './modules/credentials';
+import {
+  fetchDynamoCredentials,
+  decryptAwsKeyPair,
+  cleanupAwsCredentials,
+} from './modules/credentials';
 import readProjectData from './modules/storage';
 
 import { DEFAULT_PROJECT_NAME } from './modules/constants';
@@ -39,10 +43,13 @@ async function main() {
 
   try {
     const projectData = await fetchProjectData(secret, projectName);
+    await decryptAwsKeyPair(secret);
 
     process.stdout.write(JSON.stringify(projectData));
-    process.stdout.write(JSON.stringify(projectData.deploymentServers()));
+
+    cleanupAwsCredentials();
   } catch (e) {
+    cleanupAwsCredentials();
     process.stderr.write(JSON.stringify(e));
   }
 }
