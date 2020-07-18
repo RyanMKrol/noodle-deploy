@@ -54,12 +54,11 @@ async function main() {
     await decryptAwsKeyPair(secret);
 
     process.stdout.write(JSON.stringify(projectData));
-
-    cleanup();
   } catch (e) {
-    cleanup();
     process.stderr.write(JSON.stringify(e));
   }
+
+  cleanup();
 }
 
 main();
