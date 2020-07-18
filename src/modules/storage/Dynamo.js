@@ -1,6 +1,5 @@
 import DynamoDBWrapper from 'noodle-dynamo';
-
-const AWS_REGION = 'us-east-2';
+import { AWS_REGION } from '../constants';
 
 let dynamoDbClient = null;
 
