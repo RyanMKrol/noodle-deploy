@@ -5,7 +5,7 @@
   "main": "build/index.js",
   "keywords": [],
   "scripts": {
-    "build": "npm run lint && ./node_modules/.bin/babel src --out-dir build",
+    "build": "npm run lint && ./node_modules/.bin/babel src --out-dir build && shx rm -rf build/templates && shx cp -r src/templates build",
     "lint": "eslint src/ --ext .js"
   },
   "bin": {
@@ -18,7 +18,8 @@
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
     "eslint-plugin-import": "^2.22.0",
-    "husky": "^4.2.5"
+    "husky": "^4.2.5",
+    "shx": "^0.3.2"
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4",
