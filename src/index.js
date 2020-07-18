@@ -2,10 +2,9 @@
 
 import shell from 'shelljs';
 import util from 'util';
-import path from 'path';
 import fs from 'fs';
 
-const credentialsFolder = `${path.resolve()}/credentials/`;
+const credentialsFolder = `${__dirname}/../credentials`;
 
 shell.exec(
   `openssl aes-256-cbc -d -a -in ${credentialsFolder}/dynamo.json.enc -out ${credentialsFolder}/dynamo.json -k ${process.argv[2]}`,
