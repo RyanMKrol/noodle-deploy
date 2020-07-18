@@ -12,7 +12,7 @@ async function fetchDynamoCredentials(secret) {
   );
 
   // read credentials
-  const dynamoCredentials = await readFile(`${CREDENTIALS_FOLDER}/dynamo.json`, 'utf8');
+  const dynamoCredentials = JSON.parse(await readFile(`${CREDENTIALS_FOLDER}/dynamo.json`, 'utf8'));
 
   // remove credentials file
   fs.unlinkSync(`${CREDENTIALS_FOLDER}/dynamo.json`);
