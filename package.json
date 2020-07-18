@@ -8,9 +8,9 @@
     "type": "git",
     "url": "https://github.com/RyanMKrol/noodle-deploy.git"
   },
-  "files": [
-    "build"
-  ],
+  "bin": {
+    "noodle-deploy": "./build/index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "build": "npm run lint && ./node_modules/.bin/babel src --out-dir build",
