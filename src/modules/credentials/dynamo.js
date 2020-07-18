@@ -11,8 +11,11 @@ async function fetchDynamoCredentials(secret) {
     `openssl aes-256-cbc -d -a -in ${CREDENTIALS_FOLDER}/dynamo.json.enc -out ${CREDENTIALS_FOLDER}/dynamo.json -k ${secret}`,
   );
 
-  console.log(`${CREDENTIALS_FOLDER}/dynamo.json`);
+  // read credentials
   const dynamoCredentials = await readFile(`${CREDENTIALS_FOLDER}/dynamo.json`, 'utf8');
+
+  // remove credentials file
+  fs.unlinkSync(`${CREDENTIALS_FOLDER}/dynamo.json`);
 
   return dynamoCredentials;
 }
