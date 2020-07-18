@@ -4,7 +4,7 @@ import fetchDynamoCredentials from './modules/credentials';
 import readProjectData from './modules/storage';
 
 import { DEFAULT_PROJECT_NAME } from './modules/constants';
-import ProjectData from './modules/types';
+import { ProjectData, CouldNotReadDynamo } from './modules/types';
 
 const { argv } = require('yargs')
   .usage('Usage: $0 [options]')
@@ -27,15 +27,24 @@ async function fetchProjectData(secret, projectName) {
     projectData = await readProjectData(dynamoCredentials, DEFAULT_PROJECT_NAME);
   }
 
+  if (projectData.Count !== 1) {
+    throw new CouldNotReadDynamo();
+  }
+
   return new ProjectData(projectData);
 }
 
 async function main() {
   const { secret, projectName } = argv;
 
-  const projectData = await fetchProjectData(secret, projectName);
+  try {
+    const projectData = await fetchProjectData(secret, projectName);
 
-  process.stdout.write(JSON.stringify(projectData));
+    process.stdout.write(JSON.stringify(projectData));
+    process.stdout.write(JSON.stringify(projectData.deploymentServers()));
+  } catch (e) {
+    process.stderr.write(JSON.stringify(e));
+  }
 }
 
 main();
