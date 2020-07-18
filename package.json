@@ -21,7 +21,12 @@
     "husky": "^4.2.5"
   },
   "dependencies": {
-    "@babel/polyfill": "^7.10.4"
+    "@babel/polyfill": "^7.10.4",
+    "fs": "0.0.1-security",
+    "noodle-dynamo": "^1.0.5",
+    "path": "^0.12.7",
+    "shelljs": "^0.8.4",
+    "util": "^0.12.3"
   },
   "husky": {
     "hooks": {
