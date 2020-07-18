@@ -17,9 +17,15 @@
     "@babel/preset-env": "^7.10.4",
     "eslint": "^7.4.0",
     "eslint-config-airbnb-base": "^14.2.0",
-    "eslint-plugin-import": "^2.22.0"
+    "eslint-plugin-import": "^2.22.0",
+    "husky": "^4.2.5"
   },
   "dependencies": {
     "@babel/polyfill": "^7.10.4"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run build"
+    }
   }
 }
