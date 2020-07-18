@@ -11,13 +11,14 @@ async function fetchDynamoCredentials(secret) {
     `openssl aes-256-cbc -d -a -in ${CREDENTIALS_FOLDER}/dynamo.json.enc -out ${CREDENTIALS_FOLDER}/dynamo.json -k ${secret}`,
   );
 
-  // read credentials
   const dynamoCredentials = JSON.parse(await readFile(`${CREDENTIALS_FOLDER}/dynamo.json`, 'utf8'));
-
-  // remove credentials file
-  fs.unlinkSync(`${CREDENTIALS_FOLDER}/dynamo.json`);
 
   return dynamoCredentials;
 }
 
-export default fetchDynamoCredentials;
+function cleanupDynamoCredentials() {
+  // remove credentials file
+  fs.unlinkSync(`${CREDENTIALS_FOLDER}/dynamo.json`);
+}
+
+export { fetchDynamoCredentials, cleanupDynamoCredentials };

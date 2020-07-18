@@ -2,6 +2,7 @@
 
 import {
   fetchDynamoCredentials,
+  cleanupDynamoCredentials,
   decryptAwsKeyPair,
   cleanupAwsCredentials,
 } from './modules/credentials';
@@ -23,6 +24,13 @@ const { argv } = require('yargs')
   .help('h')
   .alias('h', 'help');
 
+// clean up any artefacts generated from this tool
+function cleanup() {
+  cleanupDynamoCredentials();
+  cleanupAwsCredentials();
+}
+
+// fetch the data about whatever project we're running this with
 async function fetchProjectData(secret, projectName) {
   const dynamoCredentials = await fetchDynamoCredentials(secret);
   let projectData = await readProjectData(dynamoCredentials, projectName);
@@ -47,9 +55,9 @@ async function main() {
 
     process.stdout.write(JSON.stringify(projectData));
 
-    cleanupAwsCredentials();
+    cleanup();
   } catch (e) {
-    cleanupAwsCredentials();
+    cleanup();
     process.stderr.write(JSON.stringify(e));
   }
 }
