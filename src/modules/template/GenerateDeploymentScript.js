@@ -1,22 +1,24 @@
 import util from 'util';
 import fs from 'fs';
 
-import { BASE_GITHUB_URL } from '../constants';
+import {
+  BASE_GITHUB_URL,
+  DEPLOYMENT_SCRIPT_TEMPLATE_LOCATION,
+  DEPLOYMENT_SCRIPT_LOCATION,
+} from '../constants';
 
 import replaceTemplateVariables from './ReplaceTemplateVariables';
 import generateDecryptionCommands from './GenerateDecryptionCommands';
 
-const DEPLOTMENT_SCRIPT_TEMPLATE_LOCATION = `${__dirname}/../../templates/host_deploy`;
-const DEPLOTMENT_SCRIPT_LOCATION = `${__dirname}/../../temp/host_deploy`;
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
 async function readTemplate() {
-  return readFile(DEPLOTMENT_SCRIPT_TEMPLATE_LOCATION, 'utf8');
+  return readFile(DEPLOYMENT_SCRIPT_TEMPLATE_LOCATION, 'utf8');
 }
 
 async function writeScript(script) {
-  return writeFile(DEPLOTMENT_SCRIPT_LOCATION, script);
+  return writeFile(DEPLOYMENT_SCRIPT_LOCATION, script);
 }
 
 async function fetchDecryptionCommands(secret) {
