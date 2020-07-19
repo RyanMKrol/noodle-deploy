@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+# makes the script fail out if any single command fails
+set -e;
+
+# build script
+npm run lint;
+shx rm -rf build;
+./node_modules/.bin/babel src --out-dir build;
+shx rm -rf build/templates;
+shx cp -r src/templates build;
+shx cp -r src/temp build;
