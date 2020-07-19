@@ -11,4 +11,8 @@ export default class ProjectData {
   repository() {
     return this.projectData.repository;
   }
+
+  name() {
+    return this.projectData.name;
+  }
 }
