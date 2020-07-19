@@ -64,11 +64,12 @@ async function main() {
     const projectData = await fetchProjectData(secret, projectName, target);
     await decryptAwsKeyPair(secret);
 
-    await generateDeploymentScript(secret, projectData);
+    const script = await generateDeploymentScript(secret, projectData);
+    console.log(script);
 
     process.stdout.write(JSON.stringify(projectData));
   } catch (e) {
-    process.stderr.write(JSON.stringify(e));
+    process.stderr.write(e.toString());
   }
 
   if (cleanup) {
