@@ -47,7 +47,7 @@ async function fetchProjectData(secret, projectName) {
     throw new CouldNotReadDynamo();
   }
 
-  return new ProjectData(projectData);
+  return new ProjectData(projectData, projectName);
 }
 
 // orchestrates all calls needed by the tool

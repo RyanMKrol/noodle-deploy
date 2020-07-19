@@ -1,6 +1,7 @@
 export default class ProjectData {
-  constructor(projectData) {
+  constructor(projectData, projectName) {
     this.projectData = projectData;
+    this.projectData.name = projectName;
   }
 
   deploymentServers() {
