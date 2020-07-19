@@ -22,10 +22,13 @@ const { argv } = require('yargs')
   .alias('p', 'projectName')
   .nargs('p', 1)
   .describe('p', 'Specify the project name')
+  .alias('t', 'target')
+  .nargs('t', 1)
+  .describe('t', 'Specify the build target - which file needs to be run once the project has built')
   .alias('c', 'cleanup')
   .nargs('c', 0)
   .describe('c', 'Specify whether to cleanup credentials')
-  .demandOption(['s', 'p'])
+  .demandOption(['s', 'p', 't'])
   .help('h')
   .alias('h', 'help');
 
@@ -36,9 +39,9 @@ async function postRunCleanup() {
 }
 
 // fetch the data about whatever project we're running this with
-async function fetchProjectData(secret, projectName) {
+async function fetchProjectData(secret, projectName, target) {
   const dynamoCredentials = await fetchDynamoCredentials(secret);
-  let projectData = await readProjectData(dynamoCredentials, projectName);
+  let projectData = await readProjectData(dynamoCredentials, projectName, target);
 
   if (projectData.Count !== 1) {
     projectData = await readProjectData(dynamoCredentials, DEFAULT_PROJECT_NAME);
@@ -53,10 +56,12 @@ async function fetchProjectData(secret, projectName) {
 
 // orchestrates all calls needed by the tool
 async function main() {
-  const { secret, projectName, cleanup } = argv;
+  const {
+    secret, projectName, cleanup, target,
+  } = argv;
 
   try {
-    const projectData = await fetchProjectData(secret, projectName);
+    const projectData = await fetchProjectData(secret, projectName, target);
     await decryptAwsKeyPair(secret);
 
     await generateDeploymentScript(secret, projectData);
