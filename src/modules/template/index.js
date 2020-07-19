@@ -1,5 +1,2 @@
-import * as ejs from 'ejs';
-
-export default function replaceTemplateVariables(content, data) {
-  return ejs.render(content, data);
-}
+export { default as generateDecryptionCommands } from './GenerateDecryptionCommands';
+export { default as replaceTemplateVariables } from './ReplaceTemplateVariables';
