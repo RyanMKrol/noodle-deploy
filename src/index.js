@@ -7,6 +7,7 @@ import {
   cleanupAwsCredentials,
 } from './modules/credentials';
 import readProjectData from './modules/storage';
+import generateDeploymentScript from './modules/template';
 
 import { DEFAULT_PROJECT_NAME } from './modules/constants';
 import { ProjectData, CouldNotReadDynamo } from './modules/types';
@@ -57,6 +58,8 @@ async function main() {
   try {
     const projectData = await fetchProjectData(secret, projectName);
     await decryptAwsKeyPair(secret);
+
+    await generateDeploymentScript(secret, projectData);
 
     process.stdout.write(JSON.stringify(projectData));
   } catch (e) {

@@ -1,2 +1,1 @@
-export { default as generateDecryptionCommands } from './GenerateDecryptionCommands';
-export { default as replaceTemplateVariables } from './ReplaceTemplateVariables';
+export { default } from './GenerateDeploymentScript';
