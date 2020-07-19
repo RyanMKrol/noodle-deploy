@@ -11,6 +11,10 @@
   "bin": {
     "noodle-deploy": "./build/index.js"
   },
+  "files": [
+    "build",
+    "credentials/dynamo.json.enc"
+  ],
   "devDependencies": {
     "@babel/cli": "^7.10.4",
     "@babel/core": "^7.10.4",
