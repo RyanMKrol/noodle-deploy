@@ -7,7 +7,7 @@ import {
   cleanupAwsCredentials,
 } from './modules/credentials';
 import readProjectData from './modules/storage';
-import generateDeploymentScript from './modules/template';
+import { cleanupScript, generateDeploymentScript } from './modules/template';
 import executeDeploymentScript from './modules/execute';
 
 import { DEFAULT_PROJECT_NAME } from './modules/constants';
@@ -26,9 +26,6 @@ const { argv } = require('yargs')
   .alias('t', 'target')
   .nargs('t', 1)
   .describe('t', 'Specify the build target - which file needs to be run once the project has built')
-  .alias('c', 'cleanup')
-  .nargs('c', 0)
-  .describe('c', 'Specify whether to cleanup credentials')
   .demandOption(['s', 'p', 't'])
   .help('h')
   .alias('h', 'help');
@@ -37,6 +34,7 @@ const { argv } = require('yargs')
 async function postRunCleanup() {
   cleanupDynamoCredentials();
   cleanupAwsCredentials();
+  cleanupScript();
 }
 
 // fetch the data about whatever project we're running this with
@@ -57,9 +55,7 @@ async function fetchProjectData(secret, projectName, target) {
 
 // orchestrates all calls needed by the tool
 async function main() {
-  const {
-    secret, projectName, cleanup, target,
-  } = argv;
+  const { secret, projectName, target } = argv;
 
   try {
     const projectData = await fetchProjectData(secret, projectName, target);
@@ -72,9 +68,7 @@ async function main() {
     process.stderr.write(e.toString());
   }
 
-  if (cleanup) {
-    await postRunCleanup();
-  }
+  await postRunCleanup();
 }
 
 main();
