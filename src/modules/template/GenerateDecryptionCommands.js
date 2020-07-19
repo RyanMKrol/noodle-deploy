@@ -8,8 +8,8 @@ function isFileEncrypted(fileName) {
   return fileName.endsWith('.enc');
 }
 
-function convertFileNameToAbsolute(fileName) {
-  return `${process.cwd()}/credentials/${fileName}`;
+function convertFileNameToRelative(fileName) {
+  return `credentials/${fileName}`;
 }
 
 function trimEncryptionFileExtension(fileName) {
@@ -24,10 +24,10 @@ export default async function generateDecryptionCommands(secret) {
     .then((files) => files
       .map((file) => {
         if (isFileEncrypted(file)) {
-          const absoluteEncryptedFilePath = convertFileNameToAbsolute(file);
-          const absoluteDecryptedFilePath = trimEncryptionFileExtension(absoluteEncryptedFilePath);
+          const relativeEncryptedFilePath = convertFileNameToRelative(file);
+          const relativeDecryptedFilePath = trimEncryptionFileExtension(relativeEncryptedFilePath);
 
-          return `openssl aes-256-cbc -d -a -in ${absoluteEncryptedFilePath} -out ${absoluteDecryptedFilePath} -k ${secret}`;
+          return `openssl aes-256-cbc -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret}`;
         }
 
         return null;
