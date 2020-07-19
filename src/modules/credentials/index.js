@@ -1,2 +1,2 @@
 export { fetchDynamoCredentials, cleanupDynamoCredentials } from './Dynamo';
-export { decryptAwsKeyPair, cleanupAwsCredentials } from './AWSKeyPair';
+export { decryptAwsKeyPair, cleanupAwsCredentials, getAwsCredentialsPath } from './AWSKeyPair';
