@@ -9,5 +9,5 @@ git pull
 npm install
 npm run build
 pm2 delete <%= project_name %>
-<%= pm2_start_command %>
+pm2 start <%= pm2_start_target %> --name <%= project_name %>
 pm2 save
