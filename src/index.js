@@ -8,6 +8,7 @@ import {
 } from './modules/credentials';
 import readProjectData from './modules/storage';
 import generateDeploymentScript from './modules/template';
+import executeDeploymentScript from './modules/execute';
 
 import { DEFAULT_PROJECT_NAME } from './modules/constants';
 import { ProjectData, CouldNotReadDynamo } from './modules/types';
@@ -64,6 +65,7 @@ async function main() {
     const projectData = await fetchProjectData(secret, projectName, target);
     await decryptAwsKeyPair(secret);
     await generateDeploymentScript(secret, projectData);
+    await executeDeploymentScript();
 
     process.stdout.write(JSON.stringify(projectData));
   } catch (e) {
