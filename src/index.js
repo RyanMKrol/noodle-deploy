@@ -5,12 +5,15 @@ import {
   cleanupDynamoCredentials,
   decryptAwsKeyPair,
   cleanupAwsCredentials,
+  decryptProjectCredentials,
+  cleanupProjectCredentials,
 } from './modules/credentials';
 import readProjectData from './modules/storage';
 
 import { DEFAULT_PROJECT_NAME } from './modules/constants';
 import { ProjectData, CouldNotReadDynamo } from './modules/types';
 
+// gates the application being used without the correct arguments
 const { argv } = require('yargs')
   .usage('Usage: $0 [options]')
   .example('$0 -s <decryption_secret> -p <project_name>')
@@ -20,14 +23,18 @@ const { argv } = require('yargs')
   .alias('p', 'projectName')
   .nargs('p', 1)
   .describe('p', 'Specify the project name')
+  .alias('c', 'cleanup')
+  .nargs('c', 0)
+  .describe('c', 'Specify whether to cleanup credentials')
   .demandOption(['s', 'p'])
   .help('h')
   .alias('h', 'help');
 
 // clean up any artefacts generated from this tool
-function cleanup() {
+async function postRunCleanup() {
   cleanupDynamoCredentials();
   cleanupAwsCredentials();
+  await cleanupProjectCredentials();
 }
 
 // fetch the data about whatever project we're running this with
@@ -46,19 +53,23 @@ async function fetchProjectData(secret, projectName) {
   return new ProjectData(projectData);
 }
 
+// orchestrates all calls needed by the tool
 async function main() {
-  const { secret, projectName } = argv;
+  const { secret, projectName, cleanup } = argv;
 
   try {
     const projectData = await fetchProjectData(secret, projectName);
     await decryptAwsKeyPair(secret);
+    await decryptProjectCredentials(secret);
 
     process.stdout.write(JSON.stringify(projectData));
   } catch (e) {
     process.stderr.write(JSON.stringify(e));
   }
 
-  cleanup();
+  if (cleanup) {
+    await postRunCleanup();
+  }
 }
 
 main();
