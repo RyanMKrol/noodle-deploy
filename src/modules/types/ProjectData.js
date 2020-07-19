@@ -6,4 +6,8 @@ export default class ProjectData {
   deploymentServers() {
     return this.projectData.deploymentServers;
   }
+
+  repository() {
+    return this.projectData.repository;
+  }
 }
