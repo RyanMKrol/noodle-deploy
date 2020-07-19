@@ -30,6 +30,10 @@ function fetchProjectName(projectData) {
   return projectData.name();
 }
 
+function fetchTargetExecutable(projectData) {
+  return projectData.targetExecutable();
+}
+
 export default async function generateDeploymentScript(secret, projectData) {
   const templateData = await readTemplate();
 
@@ -37,7 +41,7 @@ export default async function generateDeploymentScript(secret, projectData) {
     project_name: fetchProjectName(projectData),
     project_repo: fetchProjectRepo(projectData),
     decryption_commands: await fetchDecryptionCommands(secret),
-    pm2_start_command: 'TODO',
+    pm2_start_command: fetchTargetExecutable(projectData),
   });
 
   return script;
