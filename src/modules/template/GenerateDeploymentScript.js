@@ -41,7 +41,7 @@ export default async function generateDeploymentScript(secret, projectData) {
     project_name: fetchProjectName(projectData),
     project_repo: fetchProjectRepo(projectData),
     decryption_commands: await fetchDecryptionCommands(secret),
-    pm2_start_command: fetchTargetExecutable(projectData),
+    pm2_start_target: fetchTargetExecutable(projectData),
   });
 
   return script;
