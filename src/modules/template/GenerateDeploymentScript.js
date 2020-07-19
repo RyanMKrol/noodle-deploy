@@ -6,11 +6,17 @@ import { BASE_GITHUB_URL } from '../constants';
 import replaceTemplateVariables from './ReplaceTemplateVariables';
 import generateDecryptionCommands from './GenerateDecryptionCommands';
 
-const DEPLOTMENT_SCRIPT_TEMPLATE = `${__dirname}/../../templates/host_deploy`;
+const DEPLOTMENT_SCRIPT_TEMPLATE_LOCATION = `${__dirname}/../../templates/host_deploy`;
+const DEPLOTMENT_SCRIPT_LOCATION = `${__dirname}/../../temp/host_deploy`;
 const readFile = util.promisify(fs.readFile);
+const writeFile = util.promisify(fs.writeFile);
 
 async function readTemplate() {
-  return readFile(DEPLOTMENT_SCRIPT_TEMPLATE, 'utf8');
+  return readFile(DEPLOTMENT_SCRIPT_TEMPLATE_LOCATION, 'utf8');
+}
+
+async function writeScript(script) {
+  return writeFile(DEPLOTMENT_SCRIPT_LOCATION, script);
 }
 
 async function fetchDecryptionCommands(secret) {
@@ -44,5 +50,5 @@ export default async function generateDeploymentScript(secret, projectData) {
     pm2_start_target: fetchTargetExecutable(projectData),
   });
 
-  return script;
+  await writeScript(script);
 }

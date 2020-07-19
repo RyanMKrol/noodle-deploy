@@ -63,9 +63,7 @@ async function main() {
   try {
     const projectData = await fetchProjectData(secret, projectName, target);
     await decryptAwsKeyPair(secret);
-
-    const script = await generateDeploymentScript(secret, projectData);
-    console.log(script);
+    await generateDeploymentScript(secret, projectData);
 
     process.stdout.write(JSON.stringify(projectData));
   } catch (e) {
