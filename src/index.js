@@ -62,8 +62,6 @@ async function main() {
     await decryptAwsKeyPair(secret);
     await generateDeploymentScript(secret, projectData);
     await executeDeploymentScript(secret, projectData);
-
-    process.stdout.write(JSON.stringify(projectData));
   } catch (e) {
     process.stderr.write(e.toString());
   }
