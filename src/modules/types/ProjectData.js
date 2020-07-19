@@ -6,11 +6,11 @@ export default class ProjectData {
   }
 
   deploymentServers() {
-    return this.projectData.deploymentServers;
+    return this.projectData.Items[0].deploymentServers;
   }
 
   repository() {
-    return this.projectData.repository;
+    return this.projectData.Items[0].repository;
   }
 
   name() {
