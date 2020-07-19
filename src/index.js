@@ -41,7 +41,7 @@ async function postRunCleanup() {
 // fetch the data about whatever project we're running this with
 async function fetchProjectData(secret, projectName, target) {
   const dynamoCredentials = await fetchDynamoCredentials(secret);
-  let projectData = await readProjectData(dynamoCredentials, projectName, target);
+  let projectData = await readProjectData(dynamoCredentials, projectName);
 
   if (projectData.Count !== 1) {
     projectData = await readProjectData(dynamoCredentials, DEFAULT_PROJECT_NAME);
@@ -51,7 +51,7 @@ async function fetchProjectData(secret, projectName, target) {
     throw new CouldNotReadDynamo();
   }
 
-  return new ProjectData(projectData, projectName);
+  return new ProjectData(projectData, projectName, target);
 }
 
 // orchestrates all calls needed by the tool
