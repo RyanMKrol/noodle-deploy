@@ -13,6 +13,7 @@ import generateDecryptionCommands from './GenerateDecryptionCommands';
 const readFile = util.promisify(fs.readFile);
 const writeFile = util.promisify(fs.writeFile);
 
+// file methods
 async function readTemplate() {
   return readFile(DEPLOYMENT_SCRIPT_TEMPLATE_LOCATION, 'utf8');
 }
@@ -21,6 +22,11 @@ async function writeScript(script) {
   return writeFile(DEPLOYMENT_SCRIPT_LOCATION, script);
 }
 
+function cleanupScript() {
+  fs.unlinkSync(DEPLOYMENT_SCRIPT_LOCATION);
+}
+
+// helper methods
 async function fetchDecryptionCommands(secret) {
   const decryptionCommands = await generateDecryptionCommands(secret);
   const decryptionCommandsString = decryptionCommands.reduce(
@@ -42,7 +48,8 @@ function fetchTargetExecutable(projectData) {
   return projectData.targetExecutable();
 }
 
-export default async function generateDeploymentScript(secret, projectData) {
+// main method
+async function generateDeploymentScript(secret, projectData) {
   const templateData = await readTemplate();
 
   const script = replaceTemplateVariables(templateData, {
@@ -54,3 +61,5 @@ export default async function generateDeploymentScript(secret, projectData) {
 
   await writeScript(script);
 }
+
+export { cleanupScript, generateDeploymentScript };

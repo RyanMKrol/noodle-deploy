@@ -1,1 +1,1 @@
-export { default } from './GenerateDeploymentScript';
+export { cleanupScript, generateDeploymentScript } from './GenerateDeploymentScript';
