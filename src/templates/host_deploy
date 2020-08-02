@@ -1,11 +1,9 @@
-AES_PASS=$1
-
 cd ~
 rm -rf <%= project_name %>
 git clone <%= project_repo %>
 cd <%= project_name %>
-<%= decryption_commands %>
 git pull
+<%= decryption_commands %>
 npm install
 npm run build
 pm2 delete <%= project_name %>
