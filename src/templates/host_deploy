@@ -4,8 +4,10 @@ git clone <%= project_repo %>
 cd <%= project_name %>
 git pull
 <%= decryption_commands %>
+pm2 stop all
 npm install
 npm run build
+pm2 restart all
 pm2 delete <%= project_name %>
 pm2 start <%= pm2_start_target %> --name <%= project_name %>
 pm2 save
