@@ -6,16 +6,16 @@ This tool abstracts out the deployment process for all of my projects. On each r
 
 - Reads data form a Dynamo table about my projects, this will be used if I want to deploy a certain project to a different server
 - Generates a deployment script which include:
-- Pulling the latest vesion of the project
-- Any decryption of credentials that needs doing
-- Building the project
-- Running the project
+  - Pulling the latest vesion of the project
+  - Any decryption of credentials that needs doing
+  - Building the project
+  - Running the project
 - Executes the above deployment script
 
 ## Usage
 
 ```
-noodle-deploy -s "some_password" -p "some_project_name" -t "build/src/app.js";
+noodle-deploy -s "secret" -p "project_name" -t "build/src/app.js";
 
 ```
 
