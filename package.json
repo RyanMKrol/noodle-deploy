@@ -38,7 +38,7 @@
     "noodle-dynamo": "^1.0.5",
     "shelljs": "^0.8.4",
     "util": "^0.12.3",
-    "yargs": "^15.4.1"
+    "yargs": "^16.2.0"
   },
   "husky": {
     "hooks": {

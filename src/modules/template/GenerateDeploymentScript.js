@@ -48,6 +48,10 @@ function fetchTargetExecutable(projectData) {
   return projectData.targetExecutable();
 }
 
+function fetchTargetExecutableArgs(projectData) {
+  return projectData.targetExecutableArgs();
+}
+
 // main method
 async function generateDeploymentScript(secret, projectData) {
   const templateData = await readTemplate();
@@ -57,6 +61,7 @@ async function generateDeploymentScript(secret, projectData) {
     project_repo: fetchProjectRepo(projectData),
     decryption_commands: await fetchDecryptionCommands(secret),
     pm2_start_target: fetchTargetExecutable(projectData),
+    pm2_start_target_args: `-- ${fetchTargetExecutableArgs(projectData)}`,
   });
 
   await writeScript(script);
