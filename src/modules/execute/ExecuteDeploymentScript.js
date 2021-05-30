@@ -1,7 +1,7 @@
-import shell from 'shelljs';
+import shell from "shelljs";
 
-import { DEPLOYMENT_SCRIPT_LOCATION } from '../constants';
-import { getAwsCredentialsPath } from '../credentials';
+import { DEPLOYMENT_SCRIPT_LOCATION } from "../constants";
+import { getAwsCredentialsPath } from "../credentials";
 
 export default async function executeDeploymentScript(secret, projectData) {
   const deploymentServers = projectData.deploymentServers();
@@ -10,6 +10,6 @@ export default async function executeDeploymentScript(secret, projectData) {
   const deploymentServer = deploymentServers[0];
 
   shell.exec(
-    `ssh -o "StrictHostKeyChecking no" -i ${getAwsCredentialsPath()}  ec2-user@${deploymentServer} "bash -s" < ${DEPLOYMENT_SCRIPT_LOCATION} $AES_PASS`,
+    `ssh -o "StrictHostKeyChecking no" -i ${getAwsCredentialsPath()}  ec2-user@${deploymentServer} "bash -s" < ${DEPLOYMENT_SCRIPT_LOCATION} $AES_PASS`
   );
 }

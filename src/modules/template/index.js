@@ -1,1 +1,4 @@
-export { cleanupScript, generateDeploymentScript } from './GenerateDeploymentScript';
+export {
+  cleanupScript,
+  generateDeploymentScript
+} from "./GenerateDeploymentScript";
