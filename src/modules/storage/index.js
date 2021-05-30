@@ -1,1 +1,1 @@
-export { default } from "./Dynamo";
+export { default } from './Dynamo';

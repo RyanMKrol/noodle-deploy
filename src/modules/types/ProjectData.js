@@ -1,10 +1,5 @@
 export default class ProjectData {
-  constructor(
-    projectData,
-    projectName,
-    targetExecutable,
-    targetExecutableArgs
-  ) {
+  constructor(projectData, projectName, targetExecutable, targetExecutableArgs) {
     this.projectData = projectData;
     this.projectData.name = projectName;
     this.projectData.targetExecutable = targetExecutable;
