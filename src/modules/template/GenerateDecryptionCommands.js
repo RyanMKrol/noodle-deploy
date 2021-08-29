@@ -29,13 +29,7 @@ export default async function generateDecryptionCommands(secret) {
           const relativeDecryptedFilePath = trimEncryptionFileExtension(
             relativeEncryptedFilePath,
           );
-          return `
-            echo ${relativeEncryptedFilePath};
-            echo ${relativeDecryptedFilePath};
-            openssl aes-256-cbc -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret};
-            cat ${relativeEncryptedFilePath};
-            cat ${relativeDecryptedFilePath};
-          `;
+          return `openssl aes-256-cbc -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret};`;
         }
 
         return null;
