@@ -25,9 +25,7 @@ export default async function generateDecryptionCommands(secret) {
       .map((file) => {
         if (isFileEncrypted(file)) {
           const relativeEncryptedFilePath = convertFileNameToRelative(file);
-          const relativeDecryptedFilePath = trimEncryptionFileExtension(
-            relativeEncryptedFilePath,
-          );
+          const relativeDecryptedFilePath = trimEncryptionFileExtension(relativeEncryptedFilePath);
 
           return `openssl aes-256-cbc -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret}`;
         }
