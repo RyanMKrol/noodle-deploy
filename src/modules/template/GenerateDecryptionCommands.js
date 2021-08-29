@@ -29,7 +29,7 @@ export default async function generateDecryptionCommands(secret) {
             relativeEncryptedFilePath,
           );
 
-          return `openssl aes-256-cbc -pbkdf2 -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret}`;
+          return `openssl aes-256-cbc -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret}`;
         }
 
         return null;
