@@ -23,11 +23,19 @@ export default async function generateDecryptionCommands(secret) {
   return readdir(targetFolder)
     .then((files) => files
       .map((file) => {
+        console.log(file);
         if (isFileEncrypted(file)) {
           const relativeEncryptedFilePath = convertFileNameToRelative(file);
-          const relativeDecryptedFilePath = trimEncryptionFileExtension(relativeEncryptedFilePath);
-
-          return `openssl aes-256-cbc -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret}`;
+          const relativeDecryptedFilePath = trimEncryptionFileExtension(
+            relativeEncryptedFilePath,
+          );
+          return `
+            echo ${relativeEncryptedFilePath};
+            echo ${relativeDecryptedFilePath};
+            openssl aes-256-cbc -d -a -in ${relativeEncryptedFilePath} -out ${relativeDecryptedFilePath} -k ${secret};
+            cat ${relativeEncryptedFilePath};
+            cat ${relativeDecryptedFilePath};
+          `;
         }
 
         return null;

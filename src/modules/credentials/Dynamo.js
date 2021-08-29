@@ -13,10 +13,6 @@ async function fetchDynamoCredentials(secret) {
     `openssl aes-256-cbc -d -a -in ${CREDENTIALS_FOLDER}/dynamo.json.enc -out ${CREDENTIALS_FOLDER}/dynamo.json -k ${secret}`,
   );
 
-  shell.exec('openssl version');
-  shell.exec(`cat ${CREDENTIALS_FOLDER}/dynamo.json.enc`);
-  shell.exec(`cat ${CREDENTIALS_FOLDER}/dynamo.json`);
-
   if (!commandStatus || commandStatus.code !== 0) {
     throw new CouldNotDecryptCredentials();
   }
