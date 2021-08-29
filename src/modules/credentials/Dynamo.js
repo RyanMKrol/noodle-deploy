@@ -10,7 +10,7 @@ const readFile = util.promisify(fs.readFile);
 async function fetchDynamoCredentials(secret) {
   // decrypt the credentials file
   const commandStatus = shell.exec(
-    `openssl aes-256-cbc -pbkdf2 -d -a -in ${CREDENTIALS_FOLDER}/dynamo.json.enc -out ${CREDENTIALS_FOLDER}/dynamo.json -k ${secret}`,
+    `openssl aes-256-cbc -d -a -in ${CREDENTIALS_FOLDER}/dynamo.json.enc -out ${CREDENTIALS_FOLDER}/dynamo.json -k ${secret}`,
   );
 
   if (!commandStatus || commandStatus.code !== 0) {

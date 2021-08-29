@@ -13,7 +13,7 @@ function getAwsCredentialsPath() {
 async function decryptAwsKeyPair(secret) {
   // decrypt the credentials file
   const decryptCommandStatus = shell.exec(
-    `openssl aes-256-cbc -pbkdf2 -d -a -in ${credentialsFolder}/awsKeypair.pem.enc -out ${credentialsFolder}/awsKeypair.pem -k ${secret}`,
+    `openssl aes-256-cbc -d -a -in ${credentialsFolder}/awsKeypair.pem.enc -out ${credentialsFolder}/awsKeypair.pem -k ${secret}`,
   );
 
   if (!decryptCommandStatus || decryptCommandStatus.code !== 0) {
