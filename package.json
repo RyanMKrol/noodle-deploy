@@ -40,10 +40,5 @@
     "shelljs": "^0.8.4",
     "util": "^0.12.3",
     "yargs": "^16.2.0"
-  },
-  "husky": {
-    "hooks": {
-      "pre-commit": "npm run build"
-    }
   }
 }
