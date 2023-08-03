@@ -1,3 +1,7 @@
+# Deprecated
+
+This was a fun project that helped me manage the process around deploying my side projects. It removed the work to have to manually log on to the box, rebuild, and re-daemonise the binary. This project is now quite out of date, and I don't have enough projects to justify the upkeep. Fun while it lasted though!
+
 # noodle-deploy
 
 ## Overview
